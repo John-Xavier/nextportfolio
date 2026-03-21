@@ -39,7 +39,7 @@ export default function Portfolio() {
           <h1 className="text-6xl font-bold text-gray-800 animate-fadeIn">John Xavier</h1>
           <p className="mt-4 text-2xl text-gray-600">iOS Engineer</p>
           <p className="mt-2 text-lg text-gray-500">
-            Stoke-On-Trent, England | <a href="https://www.linkedin.com/in/johnxavierk/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">LinkedIn</a> | +44 7436369885 | <a href="https://github.com/John-Xavier" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub</a>
+            Kochi,Kerala | <a href="https://www.linkedin.com/in/johnxavierk/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">LinkedIn</a> | +91 9746794357 | <a href="https://github.com/John-Xavier" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub</a>
           </p>
         </main>
       </section>
@@ -295,7 +295,7 @@ export default function Portfolio() {
       <footer className="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-8">
         <div className="flex flex-col items-center">
           <p className="text-lg font-semibold mb-2">John Xavier</p>
-          <p className="text-sm mb-4">Stoke-On-Trent, England</p>
+          <p className="text-sm mb-4">Kochi, Kerala</p>
           <a
             href="mailto:johnxavieroffice@gmail.com"
             className="text-blue-500 hover:underline mb-4"
