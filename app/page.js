@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { FaSwift, FaGithub, FaGit } from 'react-icons/fa';
-import { SiXcode, SiJavascript, SiReact, SiFirebase, SiPhp } from 'react-icons/si';
+import { FaSwift, FaGithub, FaGit, FaFlutter } from 'react-icons/fa';
+import { SiXcode, SiJavascript, SiReact, SiFirebase, SiPhp, SiDart } from 'react-icons/si';
 import { useEffect } from 'react';
 
 // Scroll to top function for button in Footer
@@ -130,7 +130,7 @@ export default function Portfolio() {
               title: "Web Developer and Graphics Designer",
               company: "Ezek Digital, Kochi, India",
               description: [
-                "Designed and developed 5 WordPress websites.",
+                "Designed and developed websites with JavaScript and PHP.",
                 "Created top-quality video ads and motion graphics, resulting in high customer return rates."
               ],
             },
@@ -240,6 +240,10 @@ export default function Portfolio() {
               <FaSwift size={40} className="text-orange-500" />
               <p>Swift</p>
             </div>
+             <div className="flex flex-col items-center">
+              <SiDart size={40} className="text-blue-600" />
+              <p>Dart</p>
+            </div>
             <div className="flex flex-col items-center">
               <SiJavascript size={40} className="text-yellow-500" />
               <p>JavaScript</p>
@@ -256,12 +260,12 @@ export default function Portfolio() {
           <h3 className="text-2xl font-semibold mb-4">Frameworks</h3>
           <div className="flex gap-6 justify-center">
             <div className="flex flex-col items-center">
-              <SiXcode size={40} className="text-blue-600" />
-              <p>Xcode</p>
-            </div>
-            <div className="flex flex-col items-center">
               <FaSwift size={40} className="text-orange-500" />
               <p>SwiftUI</p>
+            </div>
+             <div className="flex flex-col items-center">
+              <FaFlutter size={40} className="text-orange-500" />
+              <p>Flutter</p>
             </div>
             <div className="flex flex-col items-center">
               <SiReact size={40} className="text-blue-500" />
@@ -274,6 +278,10 @@ export default function Portfolio() {
         <div className="text-center">
           <h3 className="text-2xl font-semibold mb-4">Tools</h3>
           <div className="flex gap-6 justify-center">
+             <div className="flex flex-col items-center">
+              <SiXcode size={40} className="text-blue-600" />
+              <p>Xcode</p>
+            </div>
             <div className="flex flex-col items-center">
               <FaGithub size={40} className="text-gray-700 dark:text-gray-200" />
               <p>GitHub</p>
