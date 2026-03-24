@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { FaSwift, FaGithub, FaGit, FaFlutter } from 'react-icons/fa';
+import { FaSwift, FaGithub, FaGit } from 'react-icons/fa';
+import { FaFlutter } from 'react-icons/fa6';
 import { SiXcode, SiJavascript, SiReact, SiFirebase, SiPhp, SiDart } from 'react-icons/si';
 import { useEffect } from 'react';
 
