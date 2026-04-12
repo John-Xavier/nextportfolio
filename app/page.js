@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { FaSwift, FaGithub, FaGit } from 'react-icons/fa';
 import { FaFlutter } from 'react-icons/fa6';
-import { SiXcode, SiJavascript, SiReact, SiFirebase, SiPhp, SiDart } from 'react-icons/si';
+import { SiXcode, SiJavascript, SiFirebase, SiPhp, SiDart, SiPython, SiStripe } from 'react-icons/si';
 import { useEffect } from 'react';
 
 // Scroll to top function for button in Footer
@@ -38,7 +38,7 @@ export default function Portfolio() {
       <section className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-200 to-gray-300 p-8 text-center scroll-animate">
         <main>
           <h1 className="text-6xl font-bold text-gray-800 animate-fadeIn">John Xavier</h1>
-          <p className="mt-4 text-2xl text-gray-600">iOS Engineer</p>
+          <p className="mt-4 text-2xl text-gray-600">iOS Developer</p>
           <p className="mt-2 text-lg text-gray-500">
             Kochi,Kerala | <a href="https://www.linkedin.com/in/johnxavierk/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">LinkedIn</a> | +91 9746794357 | <a href="https://github.com/John-Xavier" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub</a>
           </p>
@@ -56,20 +56,20 @@ export default function Portfolio() {
   />
   <h2 className="text-4xl font-semibold mb-4">About Me</h2>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
-    I’m John Xavier, an iOS Developer and Software Engineer with a passion for coding and creating impactful, user-centered applications. Growing up in Kerala, India, I developed a fascination with coding and pursued it through a Bachelor’s in Computer Science and Engineering. In 2022, I moved to the UK to complete my Master’s in Software Engineering, graduating with distinction.
+    I’m John Xavier, an iOS Developer with 4+ years of experience designing and delivering mobile apps across fintech, social media, healthcare, and real estate. Growing up in Kerala, India, I developed a fascination with coding and pursued it through a Bachelor’s in Computer Science and Engineering. I later completed my MSc in Software Engineering at Staffordshire University, UK, graduating with distinction in 2024.
   </p>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
-    Throughout my journey, I’ve overcome challenges through perseverance and dedication, constantly improving my skills in problem-solving and software refinement. As a developer, I’m committed to designing simple, intuitive interfaces that enhance user experiences. My projects like ExtraHourz and EasyBooking have been especially fulfilling—ExtraHourz for its practical impact on job-seekers, and EasyBooking for its sleek, user-friendly design.
+    Throughout my career I’ve owned complete features end-to-end — from architecture decisions to App Store delivery. Projects like ExtraHourz, a US-based gig discovery platform, and Centavizer, a marketplace I redesigned and shipped sole-developer, have been especially rewarding. I’m proficient in Swift, SwiftUI, Firebase, and RESTful APIs.
   </p>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
-    I stay updated on the latest in mobile development by learning continuously through tech events, tutorials, and personal projects. I’m particularly excited about the potential of AI in app development and look forward to incorporating it into future projects, with a long-term goal of taking on a senior management role in a tech company.
+    I stay current with mobile development through personal projects and continuous learning. My current focus is a full-stack Travel Destinations app — SwiftUI on the frontend paired with a Swift/Vapor backend — demonstrating end-to-end ownership across mobile and server-side development.
   </p>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
-    Outside of work, I’m a dedicated reader and traveler, fascinated by science fiction, history, and astrophysics. My interests drive my curiosity and keep me engaged with the latest discoveries in tech and beyond. Guided by a strong ethical foundation, attention to detail, and a collaborative spirit, I strive to create software that respects user privacy and enhances everyday experiences.
+    Outside of work I’m a dedicated reader and traveler, drawn to science fiction, history, and astrophysics. Guided by a strong ethical foundation, attention to detail, and a collaborative spirit, I strive to create software that respects user privacy and enhances everyday experiences.
   </p>
   <div className="text-center text-gray-600 mt-4 mb-6 space-y-2">
-    <p>🏆 Completed MSc with Distinction</p>
-    <p>📱 10+ Apps Published</p>
+    <p>🏆 MSc Software Engineering with Distinction</p>
+    <p>📱 Multiple iOS Apps Shipped to the App Store</p>
     <p>⚡ Passionate about Mobile UX & Clean Code</p>
   </div>
  <a
@@ -97,22 +97,12 @@ export default function Portfolio() {
           {/* Experience Item */}
           {[
             {
-              date: "Sep 2022 - Oct 2023",
-              title: "MSc Computer Science (Software Engineering)",
-              company: "Staffordshire University, UK",
-              description: [
-                "Completed with distinction.",
-                "Scored over 80% in assignments, learning several new programming languages.",
-                "Developed software to improve code quality in Java using deep learning methods as part of dissertation."
-              ],
-            },
-            {
-              date: "Nov 2020 – Sep 2022",
+              date: "Nov 2020 – Aug 2022",
               title: "iOS Developer",
               company: "Srishti Innovative, Trivandrum, India",
               description: [
-                "Key contributor in mobile app development and discussions.",
-                "Lead developer in 6 iOS projects, managed client app store accounts, and published apps.",
+                "Built and shipped 5 iOS apps across fintech, social, healthcare, and booking domains for US and Indian clients.",
+                "Led a team of 4 developers; delivered all projects on schedule using Agile methodology and MVVM architecture.",
                 "Played a major role in hiring technical talent and introduced SwiftUI to new projects."
               ],
             },
@@ -121,18 +111,17 @@ export default function Portfolio() {
               title: "iOS Developer",
               company: "Brokwill Technologies, Kochi, India",
               description: [
-                "Independently designed and developed two iOS applications.",
-                "Worked under tight deadlines to deliver applications with a small team.",
-                "Initiated source control and documentation processes for all projects."
+                "Built Knatree (family tree app) and InvStars (real estate investment club for the Australian market).",
+                "Designed UI/UX, maintained code quality, and delivered both apps within deadlines."
               ],
             },
             {
               date: "Oct 2017 – Jun 2019",
-              title: "Web Developer and Graphics Designer",
+              title: "Web Developer",
               company: "Ezek Digital, Kochi, India",
               description: [
-                "Designed and developed websites with JavaScript and PHP.",
-                "Created top-quality video ads and motion graphics, resulting in high customer return rates."
+                "Built responsive, cross-browser websites for clients using PHP and JavaScript.",
+                "Managed project delivery end to end — from requirement gathering to deployment."
               ],
             },
             {
@@ -140,7 +129,7 @@ export default function Portfolio() {
               title: "iOS Developer",
               company: "Mobtecnica Consultancy, Kochi, India",
               description: [
-                "Developed and published 3 iOS applications with Objective C and Swift."
+                "Developed iOS applications using Objective-C for client projects."
               ],
             },
           ].map((item, index) => (
@@ -163,6 +152,42 @@ export default function Portfolio() {
       </div>
     </section>
 
+      {/* Education Section */}
+      <section className="py-16 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 scroll-animate">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-semibold">Education</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+            Academic background
+          </p>
+        </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="border-l-4 border-blue-500 dark:border-blue-400">
+            {[
+              {
+                date: "2024",
+                title: "MSc Software Engineering (Distinction)",
+                company: "Staffordshire University, UK",
+              },
+              {
+                date: "2015",
+                title: "B.Tech Computer Science",
+                company: "MG University, India",
+              },
+            ].map((item, index) => (
+              <div key={index} className="mb-10 ml-8 scroll-animate">
+                <div className="flex items-center mb-1">
+                  <p className="ml-4 text-gray-500 dark:text-gray-300">{item.date}</p>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
+                  <p className="text-md text-gray-600 dark:text-gray-400">{item.company}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Projects Section */}
       <section className="py-16 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 scroll-animate">
       <div className="text-center mb-12">
@@ -177,33 +202,63 @@ export default function Portfolio() {
         {[
           {
             name: "ExtraHourz",
-            description: "An iOS app to manage shifts for hourly workers, providing seamless scheduling and notifications.",
-            link: "https://apps.apple.com/in/app/flexhourz/id1618249870"  // Replace with actual App Store link
+            description: "US-based job portal for discovering nearby gigs. Integrated Firebase, Apple Maps, and Sign in with Apple/Google.",
+            link: "https://apps.apple.com/in/app/flexhourz/id1618249870",
+            linkLabel: "View on App Store"
           },
           {
             name: "Centavizer",
-            description: "A digital solution for centralized customer feedback, designed to gather and analyze user insights.",
-            link: "https://centavizer.com"  // Replace with actual App Store link
+            description: "Live on the App Store — marketplace with a redeemable coin system. Sole developer for the marketplace module, shopping basket, and Stripe payment integration; led a full UI redesign.",
+            link: "https://centavizer.com",
+            linkLabel: "View on App Store"
           },
           {
             name: "EasyBooking",
-            description: "A platform for booking services, allowing users to make reservations with just a few clicks.",
-            link: "https://apps.apple.com/in/app/easybooking/id1342670369"  // Replace with actual App Store link
+            description: "Appointment booking platform for salons and spas with service selection and calendar management.",
+            link: "https://apps.apple.com/in/app/easybooking/id1342670369",
+            linkLabel: "View on App Store"
           },
           {
             name: "Nikah in Kerala",
             description: "An app to simplify wedding planning in Kerala, offering a directory of services and venues.",
-            link: "https://apps.apple.com/in/app/nikah-in-kerala-matrimony/id1222564842"  // Replace with actual App Store link
+            link: "https://apps.apple.com/in/app/nikah-in-kerala-matrimony/id1222564842",
+            linkLabel: "View on App Store"
           },
           {
-            name: "Invstars",
-            description: "A social platform for investors to share insights and track market trends.",
-            link: "https://apps.apple.com/app/invstars"  // Replace with actual App Store link
+            name: "InvStars",
+            description: "Real estate investment club platform for the Australian market — project listings, member enquiries, agent connections, and in-app chat.",
+            link: "https://apps.apple.com/app/invstars",
+            linkLabel: "View on App Store"
           },
           {
             name: "Alerts Buddy",
             description: "An alerting application for custom notifications, helping users stay updated on their interests.",
-            link: "https://apps.apple.com/app/alerts-buddy"  // Replace with actual App Store link
+            link: "https://apps.apple.com/app/alerts-buddy",
+            linkLabel: "View on App Store"
+          },
+          {
+            name: "Maternia",
+            description: "Pregnancy health tracking app with metric logging and guided tutorials for expecting mothers.",
+            link: null,
+            linkLabel: null
+          },
+          {
+            name: "TimeBox",
+            description: "Social media app for close friends and family featuring VOIP calling, real-time messaging, and scheduled future message/media delivery.",
+            link: null,
+            linkLabel: null
+          },
+          {
+            name: "Knatree",
+            description: "Family tree app with relationship mapping, a social news feed for relatives, and in-app chat supporting media and file sharing.",
+            link: null,
+            linkLabel: null
+          },
+          {
+            name: "Travel Destinations App",
+            description: "Personal project (in progress) — full-stack iOS app with a SwiftUI frontend and a Swift backend built with Vapor and Fluent, demonstrating end-to-end ownership across mobile and server-side development.",
+            link: null,
+            linkLabel: null
           }
         ].map((project, index) => (
           <div key={index} className="max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300">
@@ -211,14 +266,16 @@ export default function Portfolio() {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               {project.description}
             </p>
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            >
-              View on App Store
-            </a>
+            {project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                {project.linkLabel}
+              </a>
+            )}
           </div>
         ))}
       </div>
@@ -236,12 +293,20 @@ export default function Portfolio() {
         {/* Languages */}
         <div className="text-center">
           <h3 className="text-2xl font-semibold mb-4">Languages</h3>
-          <div className="flex gap-6 justify-center">
+          <div className="flex flex-wrap gap-6 justify-center max-w-sm">
             <div className="flex flex-col items-center">
               <FaSwift size={40} className="text-orange-500" />
               <p>Swift</p>
             </div>
-             <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center">
+              <FaSwift size={40} className="text-orange-400" />
+              <p>SwiftUI</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <SiPython size={40} className="text-blue-500" />
+              <p>Python</p>
+            </div>
+            <div className="flex flex-col items-center">
               <SiDart size={40} className="text-blue-600" />
               <p>Dart</p>
             </div>
@@ -250,53 +315,84 @@ export default function Portfolio() {
               <p>JavaScript</p>
             </div>
             <div className="flex flex-col items-center">
-              <SiPhp size={40} className="text-blue-600" />
+              <SiPhp size={40} className="text-indigo-500" />
               <p>PHP</p>
             </div>
+            {["UIKit", "Objective-C"].map(label => (
+              <div key={label} className="flex flex-col items-center justify-center">
+                <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Frameworks */}
+        {/* Frameworks & Tools */}
         <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Frameworks</h3>
-          <div className="flex gap-6 justify-center">
+          <h3 className="text-2xl font-semibold mb-4">Frameworks & Tools</h3>
+          <div className="flex flex-wrap gap-6 justify-center max-w-sm">
             <div className="flex flex-col items-center">
-              <FaSwift size={40} className="text-orange-500" />
-              <p>SwiftUI</p>
+              <SiFirebase size={40} className="text-yellow-500" />
+              <p>Firebase</p>
             </div>
-             <div className="flex flex-col items-center">
-              <FaFlutter size={40} className="text-orange-500" />
+            <div className="flex flex-col items-center">
+              <FaFlutter size={40} className="text-blue-400" />
               <p>Flutter</p>
             </div>
             <div className="flex flex-col items-center">
-              <SiReact size={40} className="text-blue-500" />
-              <p>React</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Tools */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Tools</h3>
-          <div className="flex gap-6 justify-center">
-             <div className="flex flex-col items-center">
-              <SiXcode size={40} className="text-blue-600" />
-              <p>Xcode</p>
+              <SiStripe size={40} className="text-indigo-500" />
+              <p>Stripe</p>
             </div>
             <div className="flex flex-col items-center">
-              <FaGithub size={40} className="text-gray-700 dark:text-gray-200" />
-              <p>GitHub</p>
+              <SiXcode size={40} className="text-blue-600" />
+              <p>Xcode</p>
             </div>
             <div className="flex flex-col items-center">
               <FaGit size={40} className="text-red-500" />
               <p>Git</p>
             </div>
             <div className="flex flex-col items-center">
-              <SiFirebase size={40} className="text-yellow-500" />
-              <p>Firebase</p>
+              <FaGithub size={40} className="text-gray-700 dark:text-gray-200" />
+              <p>GitHub</p>
             </div>
+            {["Core Data", "REST APIs", "Apple Maps", "Google Maps", "Sign in with Apple/Google"].map(label => (
+              <div key={label} className="flex flex-col items-center justify-center">
+                <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Architecture & Practices */}
+        <div className="text-center">
+          <h3 className="text-2xl font-semibold mb-4">Architecture & Practices</h3>
+          <div className="flex flex-wrap gap-3 justify-center max-w-xs">
+            {["MVVM", "Agile/Scrum", "Team Leadership"].map(label => (
+              <span key={label} className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Human Languages Section */}
+    <section className="py-12 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 scroll-animate">
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-semibold">Languages</h2>
+        <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+          Languages I speak
+        </p>
+      </div>
+      <div className="flex flex-wrap justify-center gap-8">
+        {[
+          { lang: "Malayalam", level: "Advanced" },
+          { lang: "English", level: "Advanced" },
+          { lang: "Hindi", level: "Proficient" },
+        ].map(({ lang, level }) => (
+          <div key={lang} className="text-center">
+            <p className="text-xl font-semibold">{lang}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">{level}</p>
+          </div>
+        ))}
       </div>
     </section>
 
@@ -313,7 +409,7 @@ export default function Portfolio() {
           </a>
 
           <div className="flex gap-6 mb-4">
-            <a href="https://linkedin.com/johnxavierk" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
+            <a href="https://www.linkedin.com/in/johnxavierk/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
               LinkedIn
             </a>
             <a href="https://github.com/John-Xavier" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
