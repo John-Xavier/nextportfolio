@@ -53,7 +53,7 @@ export default function Portfolio() {
   />
   <h2 className="text-4xl font-semibold mb-4">About Me</h2>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
-    I’m John Xavier, an iOS Developer with 4+ years of experience designing and delivering mobile apps across fintech, social media, healthcare, and real estate. Growing up in Kerala, India, I developed a fascination with coding and pursued it through a Bachelor’s in Computer Science and Engineering. I later completed my MSc in Software Engineering at Staffordshire University, UK, graduating with distinction in 2024.
+    I’m John Xavier, an iOS Developer with 4+ years of experience designing and delivering mobile apps across fintech, social media, healthcare, and real estate. Growing up in Kerala, India, I developed a fascination with coding and pursued it through a Bachelor’s in Computer Science and Engineering. I later completed my MSc in Software Engineering at Staffordshire University, UK.
   </p>
   <p className="text-center max-w-2xl text-lg mb-6 leading-relaxed">
     Throughout my career I’ve owned complete features end-to-end — from architecture decisions to App Store delivery. Projects like ExtraHourz, a US-based gig discovery platform, and Centavizer, a marketplace I redesigned and shipped sole-developer, have been especially rewarding. I’m proficient in Swift, SwiftUI, Firebase, and RESTful APIs.
@@ -161,7 +161,7 @@ export default function Portfolio() {
           <div className="border-l-4 border-blue-500 dark:border-blue-400">
             {[
               {
-                date: "2024",
+                date: "2023",
                 title: "MSc Software Engineering (Distinction)",
                 company: "Staffordshire University, UK",
               },
@@ -288,11 +288,6 @@ export default function Portfolio() {
 
       <div className="max-w-3xl mx-auto px-6 flex flex-col gap-10">
         {[
-          {
-            category: "Languages",
-            color: "text-blue-500 dark:text-blue-400",
-            skills: ["Swift", "SwiftUI", "UIKit", "Objective-C", "Python", "Dart", "PHP", "JavaScript"],
-          },
           {
             category: "Frameworks & Tools",
             color: "text-emerald-500 dark:text-emerald-400",
