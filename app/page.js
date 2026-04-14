@@ -1,8 +1,5 @@
 "use client";
 import Image from "next/image";
-import { FaSwift, FaGithub, FaGit } from 'react-icons/fa';
-import { FaFlutter } from 'react-icons/fa6';
-import { SiXcode, SiJavascript, SiFirebase, SiPhp, SiDart, SiPython, SiStripe } from 'react-icons/si';
 import { useEffect } from 'react';
 
 // Scroll to top function for button in Footer
@@ -289,88 +286,38 @@ export default function Portfolio() {
         </p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-12">
-        {/* Languages */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Languages</h3>
-          <div className="flex flex-wrap gap-6 justify-center max-w-sm">
-            <div className="flex flex-col items-center">
-              <FaSwift size={40} className="text-orange-500" />
-              <p>Swift</p>
+      <div className="max-w-3xl mx-auto px-6 flex flex-col gap-10">
+        {[
+          {
+            category: "Languages",
+            color: "text-blue-500 dark:text-blue-400",
+            skills: ["Swift", "SwiftUI", "UIKit", "Objective-C", "Python", "Dart", "PHP", "JavaScript"],
+          },
+          {
+            category: "Frameworks & Tools",
+            color: "text-emerald-500 dark:text-emerald-400",
+            skills: ["Firebase", "Flutter", "Stripe", "Core Data", "REST APIs", "Apple Maps", "Google Maps", "Sign in with Apple/Google", "Xcode", "Git"],
+          },
+          {
+            category: "Architecture & Practices",
+            color: "text-purple-500 dark:text-purple-400",
+            skills: ["MVVM", "Agile/Scrum", "Team Leadership"],
+          },
+        ].map(({ category, color, skills }) => (
+          <div key={category}>
+            <h3 className={`text-lg font-semibold mb-3 ${color}`}>{category}</h3>
+            <div className="flex flex-wrap gap-2">
+              {skills.map(skill => (
+                <span
+                  key={skill}
+                  className="px-4 py-1.5 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
-            <div className="flex flex-col items-center">
-              <FaSwift size={40} className="text-orange-400" />
-              <p>SwiftUI</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiPython size={40} className="text-blue-500" />
-              <p>Python</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiDart size={40} className="text-blue-600" />
-              <p>Dart</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiJavascript size={40} className="text-yellow-500" />
-              <p>JavaScript</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiPhp size={40} className="text-indigo-500" />
-              <p>PHP</p>
-            </div>
-            {["UIKit", "Objective-C"].map(label => (
-              <div key={label} className="flex flex-col items-center justify-center">
-                <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
-              </div>
-            ))}
           </div>
-        </div>
-
-        {/* Frameworks & Tools */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Frameworks & Tools</h3>
-          <div className="flex flex-wrap gap-6 justify-center max-w-sm">
-            <div className="flex flex-col items-center">
-              <SiFirebase size={40} className="text-yellow-500" />
-              <p>Firebase</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <FaFlutter size={40} className="text-blue-400" />
-              <p>Flutter</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiStripe size={40} className="text-indigo-500" />
-              <p>Stripe</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <SiXcode size={40} className="text-blue-600" />
-              <p>Xcode</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <FaGit size={40} className="text-red-500" />
-              <p>Git</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <FaGithub size={40} className="text-gray-700 dark:text-gray-200" />
-              <p>GitHub</p>
-            </div>
-            {["Core Data", "REST APIs", "Apple Maps", "Google Maps", "Sign in with Apple/Google"].map(label => (
-              <div key={label} className="flex flex-col items-center justify-center">
-                <span className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Architecture & Practices */}
-        <div className="text-center">
-          <h3 className="text-2xl font-semibold mb-4">Architecture & Practices</h3>
-          <div className="flex flex-wrap gap-3 justify-center max-w-xs">
-            {["MVVM", "Agile/Scrum", "Team Leadership"].map(label => (
-              <span key={label} className="px-3 py-1 rounded-full bg-gray-200 dark:bg-gray-700 text-sm font-medium">{label}</span>
-            ))}
-          </div>
-        </div>
+        ))}
       </div>
     </section>
 
