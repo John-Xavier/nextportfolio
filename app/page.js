@@ -289,11 +289,6 @@ export default function Portfolio() {
       <div className="max-w-3xl mx-auto px-6 flex flex-col gap-10">
         {[
           {
-            category: "Languages",
-            color: "text-blue-500 dark:text-blue-400",
-            skills: ["Swift", "SwiftUI", "UIKit", "Objective-C", "Python", "Dart", "PHP", "JavaScript"],
-          },
-          {
             category: "Frameworks & Tools",
             color: "text-emerald-500 dark:text-emerald-400",
             skills: ["Firebase", "Flutter", "Stripe", "Core Data", "REST APIs", "Apple Maps", "Google Maps", "Sign in with Apple/Google", "Xcode", "Git"],
