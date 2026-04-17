@@ -316,28 +316,6 @@ export default function Portfolio() {
       </div>
     </section>
 
-    {/* Human Languages Section */}
-    <section className="py-12 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 scroll-animate">
-      <div className="text-center mb-8">
-        <h2 className="text-4xl font-semibold">Languages</h2>
-        <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
-          Languages I speak
-        </p>
-      </div>
-      <div className="flex flex-wrap justify-center gap-8">
-        {[
-          { lang: "Malayalam", level: "Advanced" },
-          { lang: "English", level: "Advanced" },
-          { lang: "Hindi", level: "Proficient" },
-        ].map(({ lang, level }) => (
-          <div key={lang} className="text-center">
-            <p className="text-xl font-semibold">{lang}</p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">{level}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-
       {/* Footer Section */}
       <footer className="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-8">
         <div className="flex flex-col items-center">
