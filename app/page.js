@@ -66,8 +66,65 @@ export default function Portfolio() {
         </main>
       </section>
 
-      {/* About */}
+      {/* Featured: Wayspot */}
       <section className="py-24 bg-[#111120] scroll-animate">
+        <div className="max-w-5xl mx-auto px-8">
+          <div className="text-center mb-12">
+            <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Latest Launch</p>
+            <h2 className="text-4xl font-bold text-slate-100">Now on the App Store</h2>
+          </div>
+          <div className="relative rounded-3xl border border-violet-500/20 bg-gradient-to-br from-[#0a0a12] to-[#111120] p-8 sm:p-12 overflow-hidden">
+            <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-violet-600/20 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+            <div className="relative grid sm:grid-cols-[auto,1fr] gap-8 sm:gap-10 items-center">
+              <div className="flex justify-center sm:justify-start">
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-violet-500 to-cyan-400 blur-2xl opacity-30" />
+                  <Image
+                    src="/wayspot-icon.png"
+                    alt="Wayspot app icon"
+                    width={160}
+                    height={160}
+                    className="relative rounded-3xl ring-1 ring-violet-500/30"
+                  />
+                </div>
+              </div>
+              <div className="text-center sm:text-left">
+                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2 mb-3">
+                  <h3 className="text-3xl sm:text-4xl font-bold text-slate-100">Wayspot</h3>
+                  <span className="px-3 py-1 rounded-full bg-violet-500/15 border border-violet-500/30 text-violet-300 text-xs font-medium">Featured</span>
+                </div>
+                <p className="text-violet-400 text-sm mb-4">A quiet companion for spontaneous journeys.</p>
+                <p className="text-slate-400 leading-relaxed mb-6">
+                  My full-stack personal project — a SwiftUI iOS app backed by a Swift/Vapor server — built end to end and shipped to the App Store. Designed for curious explorers who&apos;d rather wander than plan.
+                </p>
+                <div className="flex flex-wrap justify-center sm:justify-start gap-3">
+                  <a
+                    href="https://apps.apple.com/in/app/wayspot/id6766961080"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg font-medium transition-colors"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.43 2.21-1.13 3.01-.86.99-2.27 1.76-3.45 1.66-.15-1.13.4-2.27 1.1-3.01.78-.83 2.13-1.51 3.48-1.66ZM20.5 17.39c-.55 1.27-.81 1.84-1.51 2.97-.97 1.57-2.34 3.53-4.04 3.55-1.51.02-1.9-.98-3.95-.97-2.05.01-2.48.99-3.99.97-1.7-.02-3-1.79-3.97-3.36C.41 16.87-.18 11.4 2.55 8.5c1-1.07 2.4-1.69 3.78-1.69 1.6 0 2.6.88 3.92.88 1.28 0 2.06-.88 3.91-.88 1.31 0 2.7.71 3.69 1.94-3.24 1.78-2.71 6.36 1.65 8.64Z"/></svg>
+                    Download on App Store
+                  </a>
+                  <a
+                    href="https://wayspot.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 border border-[#1e1e35] hover:border-violet-500/50 text-slate-300 hover:text-violet-400 rounded-lg font-medium transition-colors"
+                  >
+                    Visit wayspot.in →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section className="py-24 bg-[#0a0a12] scroll-animate">
         <div className="max-w-5xl mx-auto px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="flex justify-center">
@@ -89,7 +146,7 @@ export default function Portfolio() {
                 I&apos;m John Xavier, an iOS Developer with 4+ years of experience designing and delivering mobile apps across fintech, social media, healthcare, and real estate. Projects like ExtraHourz, a US-based gig discovery platform, and Centavizer, a marketplace I redesigned and shipped as sole developer, have been especially rewarding.
               </p>
               <p className="text-slate-400 leading-relaxed mb-8">
-                I stay current through personal projects including a full-stack Travel Destinations app — SwiftUI frontend with a Swift/Vapor backend — demonstrating end-to-end ownership across mobile and server-side development.
+                I stay current through personal projects — most recently Wayspot, a full-stack travel companion now live on the App Store with a SwiftUI frontend and a Swift/Vapor backend, built end to end as proof of ownership across mobile and server-side development.
               </p>
               <div className="grid grid-cols-3 gap-4 mb-8">
                 {[
@@ -97,7 +154,7 @@ export default function Portfolio() {
                   { value: "10+", label: "Apps Shipped" },
                   { value: "MSc", label: "Distinction" },
                 ].map(({ value, label }) => (
-                  <div key={label} className="text-center p-4 rounded-xl border border-[#1e1e35] bg-[#0a0a12]">
+                  <div key={label} className="text-center p-4 rounded-xl border border-[#1e1e35] bg-[#111120]">
                     <p className="text-2xl font-bold text-violet-400">{value}</p>
                     <p className="text-xs text-slate-500 mt-1">{label}</p>
                   </div>
@@ -112,7 +169,7 @@ export default function Portfolio() {
       </section>
 
       {/* Experience */}
-      <section className="py-24 bg-[#0a0a12] scroll-animate">
+      <section className="py-24 bg-[#111120] scroll-animate">
         <div className="max-w-4xl mx-auto px-8">
           <div className="text-center mb-16">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Career</p>
@@ -159,7 +216,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl border border-[#1e1e35] border-l-4 border-l-violet-500 bg-[#111120] hover:bg-violet-500/5 transition-colors scroll-animate"
+                className="p-6 rounded-xl border border-[#1e1e35] border-l-4 border-l-violet-500 bg-[#0a0a12] hover:bg-violet-500/5 transition-colors scroll-animate"
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
@@ -186,7 +243,7 @@ export default function Portfolio() {
       </section>
 
       {/* Education */}
-      <section className="py-24 bg-[#111120] scroll-animate">
+      <section className="py-24 bg-[#0a0a12] scroll-animate">
         <div className="max-w-4xl mx-auto px-8">
           <div className="text-center mb-16">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Background</p>
@@ -207,7 +264,7 @@ export default function Portfolio() {
             ].map((item, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl border border-[#1e1e35] border-l-4 border-l-violet-500 bg-[#0a0a12] scroll-animate"
+                className="p-6 rounded-xl border border-[#1e1e35] border-l-4 border-l-violet-500 bg-[#111120] scroll-animate"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <span className="px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-violet-400 text-xs font-medium">
@@ -222,7 +279,7 @@ export default function Portfolio() {
       </section>
 
       {/* Projects */}
-      <section id="projects" className="py-24 bg-[#0a0a12] scroll-animate">
+      <section id="projects" className="py-24 bg-[#111120] scroll-animate">
         <div className="max-w-5xl mx-auto px-8">
           <div className="text-center mb-16">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Work</p>
@@ -230,6 +287,12 @@ export default function Portfolio() {
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
             {[
+              {
+                name: "Wayspot",
+                description: "Live on the App Store — my full-stack personal project for spontaneous explorers. SwiftUI iOS app paired with a Swift/Vapor backend, designed, built, and shipped end to end.",
+                link: "https://apps.apple.com/in/app/wayspot/id6766961080",
+                featured: true,
+              },
               {
                 name: "ExtraHourz",
                 description: "US-based job portal for discovering nearby gigs. Integrated Firebase, Apple Maps, and Sign in with Apple/Google.",
@@ -275,24 +338,28 @@ export default function Portfolio() {
                 description: "Family tree app with relationship mapping, a social news feed for relatives, and in-app chat supporting media and file sharing.",
                 link: null,
               },
-              {
-                name: "Travel Destinations App",
-                description: "Personal project (in progress) — full-stack iOS app with a SwiftUI frontend and a Swift/Vapor backend demonstrating end-to-end ownership across mobile and server-side development.",
-                link: null,
-              },
             ].map((project, index) => (
               <div
                 key={index}
-                className="flex flex-col p-6 rounded-xl border border-[#1e1e35] bg-[#111120] hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/5 transition-all duration-300 scroll-animate"
+                className={`flex flex-col p-6 rounded-xl border bg-[#0a0a12] hover:shadow-2xl hover:shadow-violet-500/5 transition-all duration-300 scroll-animate ${
+                  project.featured
+                    ? "sm:col-span-2 border-violet-500/40 hover:border-violet-500/60"
+                    : "border-[#1e1e35] hover:border-violet-500/40"
+                }`}
                 style={{ transitionDelay: `${(index % 2) * 80}ms` }}
               >
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-xl font-semibold text-slate-100">{project.name}</h3>
-                  {project.link ? (
-                    <span className="shrink-0 ml-3 px-2 py-0.5 rounded-full border border-violet-500/30 text-violet-400 text-xs font-medium">App Store</span>
-                  ) : (
-                    <span className="shrink-0 ml-3 px-2 py-0.5 rounded-full border border-slate-700 text-slate-500 text-xs font-medium">In Dev</span>
-                  )}
+                  <div className="flex gap-2 shrink-0 ml-3">
+                    {project.featured && (
+                      <span className="px-2 py-0.5 rounded-full bg-violet-500/15 border border-violet-500/40 text-violet-300 text-xs font-medium">Featured</span>
+                    )}
+                    {project.link ? (
+                      <span className="px-2 py-0.5 rounded-full border border-violet-500/30 text-violet-400 text-xs font-medium">App Store</span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full border border-slate-700 text-slate-500 text-xs font-medium">In Dev</span>
+                    )}
+                  </div>
                 </div>
                 <p className="text-slate-400 text-sm leading-relaxed flex-1 mb-4">{project.description}</p>
                 {project.link && (
@@ -307,7 +374,7 @@ export default function Portfolio() {
       </section>
 
       {/* Skills */}
-      <section className="py-24 bg-[#111120] scroll-animate">
+      <section className="py-24 bg-[#0a0a12] scroll-animate">
         <div className="max-w-3xl mx-auto px-8">
           <div className="text-center mb-16">
             <p className="text-violet-400 text-sm font-medium tracking-widest uppercase mb-3">Technical</p>
@@ -332,7 +399,7 @@ export default function Portfolio() {
                   {skills.map(skill => (
                     <span
                       key={skill}
-                      className="px-4 py-1.5 rounded-full border border-violet-500/20 bg-[#0a0a12] text-slate-300 text-sm font-medium hover:border-violet-500/60 hover:text-violet-300 transition-colors cursor-default"
+                      className="px-4 py-1.5 rounded-full border border-violet-500/20 bg-[#111120] text-slate-300 text-sm font-medium hover:border-violet-500/60 hover:text-violet-300 transition-colors cursor-default"
                     >
                       {skill}
                     </span>
