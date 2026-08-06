@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from 'react';
 
 const scrollToTop = () => {
@@ -62,6 +63,9 @@ export default function Portfolio() {
             <a href="/Resume.pdf" download className="px-6 py-3 border border-[#1e1e35] hover:border-violet-500/50 text-slate-300 hover:text-violet-400 rounded-lg font-medium transition-colors">
               Download Resume
             </a>
+            <Link href="/interview" className="px-6 py-3 border border-violet-500/40 hover:border-violet-500/70 bg-violet-500/5 hover:bg-violet-500/10 text-violet-300 rounded-lg font-medium transition-colors">
+              iOS Interview Trainer →
+            </Link>
           </div>
         </main>
       </section>
