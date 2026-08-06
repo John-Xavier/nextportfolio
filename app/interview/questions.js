@@ -19,6 +19,10 @@ export const TOPICS = [
   "Networking",
   "Persistence",
   "Testing",
+  "Combine",
+  "Swift 6 & Data Races",
+  "Performance",
+  "System Design",
   "Coding Practice",
 ];
 
@@ -607,6 +611,620 @@ export const questions = [
     answer:
       "Debouncing delays acting on input until a quiet period has elapsed, so only the last event in a burst fires. Cancel any pending work item on each keystroke and schedule a new one after a delay:\n\n```swift\nvar workItem: DispatchWorkItem?\nfunc search(_ query: String) {\n    workItem?.cancel()\n    let item = DispatchWorkItem { performSearch(query) }\n    workItem = item\n    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: item)\n}\n```\n\nWith Combine you'd use `.debounce(for:scheduler:)`; with async you'd cancel the previous `Task`. This cuts wasted network calls.",
     keyPoints: ["delay until quiet", "cancel pending", "DispatchWorkItem asyncAfter", "Combine debounce", "cancel Task", "reduce calls"],
+  },
+
+  // ═══════════════════════════ EXPANDED SET ═══════════════════════════
+
+  // ───────────────────────── Swift Fundamentals ─────────────────────────
+  {
+    id: "sf-9",
+    topic: "Swift Fundamentals",
+    difficulty: "Beginner",
+    question: "What is the difference between `==` and `===` in Swift?",
+    answer:
+      "`==` compares values for equality and is defined by the `Equatable` protocol — you can implement it for your own types. `===` (and `!==`) is the identity operator: it checks whether two references point to the exact same class instance in memory. `===` only applies to reference types (classes); value types don't have identity. Two distinct objects can be `==` (equal) but not `===` (not the same instance).",
+    keyPoints: ["equality Equatable", "identity same instance", "reference types only", "value vs identity"],
+  },
+  {
+    id: "sf-10",
+    topic: "Swift Fundamentals",
+    difficulty: "Intermediate",
+    question: "What is the difference between `map`, `flatMap`, and `compactMap` on an Optional?",
+    answer:
+      "On an optional, `map` applies a transform to the wrapped value if present, returning a new optional (`Int?` → `String?`). `flatMap` applies a transform that itself returns an optional and flattens the result, avoiding a double-optional (`Int??` → `Int?`). `compactMap` is a Sequence operation, not an Optional one — it maps then filters out nils. The distinction: `map` wraps the closure's result in an optional; `flatMap` expects the closure to already return an optional.",
+    keyPoints: ["map transforms wrapped", "flatMap flattens double optional", "compactMap sequence removes nil", "avoid nested optional"],
+  },
+  {
+    id: "sf-11",
+    topic: "Swift Fundamentals",
+    difficulty: "Intermediate",
+    question: "What are `lazy` properties and when should you use them?",
+    answer:
+      "A `lazy var` is a stored property whose initial value isn't computed until the first time it's accessed. It's useful when the initial value is expensive to compute, depends on other properties not available at init time, or may never be needed. Caveats: it must be `var` (not `let`), it isn't thread-safe (concurrent first access can compute it twice), and it breaks the value-type copy story since accessing it mutates the instance.",
+    keyPoints: ["computed on first access", "expensive value", "must be var", "not thread-safe", "depends on other properties"],
+  },
+  {
+    id: "sf-12",
+    topic: "Swift Fundamentals",
+    difficulty: "Intermediate",
+    question: "What is the difference between a stored property and a computed property?",
+    answer:
+      "A stored property holds a value in memory as part of the instance. A computed property has no backing storage — it provides a getter (and optionally a setter) that calculates its value each time it's accessed, usually derived from other properties. Computed properties can't be `lazy` and can't have property observers on themselves, but their getter can run arbitrary logic. Use computed properties for values that should always stay in sync with their inputs.",
+    keyPoints: ["stored holds value", "computed no storage", "getter setter", "derived", "always in sync"],
+  },
+  {
+    id: "sf-13",
+    topic: "Swift Fundamentals",
+    difficulty: "Intermediate",
+    question: "What do `willSet` and `didSet` property observers do?",
+    answer:
+      "Property observers run code in response to changes in a stored property's value. `willSet` runs just before the new value is stored (with the new value available as `newValue`); `didSet` runs immediately after (with the previous value as `oldValue`). They don't fire during initialization, and they don't fire when a property is set inside its own `didSet`. Common uses: updating UI when a model value changes, or validating/reacting to state.",
+    keyPoints: ["willSet before", "didSet after", "newValue oldValue", "not during init", "react to change"],
+  },
+  {
+    id: "sf-14",
+    topic: "Swift Fundamentals",
+    difficulty: "Advanced",
+    question: "What is the difference between `throws`, `rethrows`, and `try?`/`try!`?",
+    answer:
+      "`throws` marks a function that can throw an error; callers must handle it with `do/catch` or propagate with `try`. `rethrows` marks a function that only throws if one of its closure parameters throws — so non-throwing callers don't need `try`. `try?` converts a throwing call into an optional (nil on error, discarding the error). `try!` force-unwraps the result and crashes if an error is thrown — use only when you can prove it won't.",
+    keyPoints: ["throws propagates", "rethrows only if closure throws", "try? optional on error", "try! crashes", "do catch"],
+  },
+  {
+    id: "sf-15",
+    topic: "Swift Fundamentals",
+    difficulty: "Advanced",
+    question: "What is a `@resultBuilder` and where is it used?",
+    answer:
+      "A result builder (`@resultBuilder`) is a type that implements static methods like `buildBlock`, `buildOptional`, and `buildEither` to transform a sequence of statements in a closure into a single aggregated value. It powers SwiftUI's `ViewBuilder` — letting you list child views in a `body` without commas or explicit array construction — and libraries like SwiftData queries or regex builders. The compiler rewrites the DSL-like closure into calls to your builder methods.",
+    keyPoints: ["resultBuilder", "buildBlock", "DSL", "ViewBuilder", "compiler rewrites", "aggregate statements"],
+  },
+
+  // ───────────────────────── Optionals ─────────────────────────
+  {
+    id: "opt-5",
+    topic: "Optionals",
+    difficulty: "Advanced",
+    question: "What is the difference between `guard let` and `if let`, and when is each preferable?",
+    answer:
+      "`if let` binds an unwrapped value inside the braces — its scope is limited to that block. `guard let` binds a value that stays in scope for the rest of the enclosing function, but requires an `else` that must exit the scope (return, throw, break, continue). `guard` is preferred for early-exit validation at the top of a function because it keeps the happy path un-nested and the bound values usable afterward. Use `if let` when the unwrapped value is only needed locally.",
+    keyPoints: ["if let local scope", "guard let function scope", "guard else must exit", "early exit", "un-nested happy path"],
+  },
+  {
+    id: "opt-6",
+    topic: "Optionals",
+    difficulty: "Intermediate",
+    question: "What does the nil-coalescing operator do, and how does it short-circuit?",
+    answer:
+      "`a ?? b` returns `a`'s unwrapped value if `a` is non-nil, otherwise `b`. The right side is only evaluated when the left is nil (short-circuiting), so `expensiveDefault()` in `value ?? expensiveDefault()` doesn't run if `value` exists. It can be chained (`a ?? b ?? c`) and the result type is non-optional when the final default is non-optional. It's the idiomatic way to provide a fallback without an explicit `if`.",
+    keyPoints: ["fallback default", "right side only if nil", "short-circuit", "chainable", "non-optional result"],
+  },
+
+  // ───────────────────────── Value & Reference Types ─────────────────────────
+  {
+    id: "vr-4",
+    topic: "Value & Reference Types",
+    difficulty: "Intermediate",
+    question: "Why can a `let` array be mutated element-by-element in some languages but not in Swift?",
+    answer:
+      "In Swift, `Array` is a value type, so a `let` array is fully immutable — you can't append, remove, or reassign elements. Declaring it `var` makes the whole value mutable. This differs from reference-type collections (like NSArray/NSMutableArray or Java's ArrayList) where `let`/`final` only fixes the reference, not the contents. Swift's value semantics mean immutability of the binding equals immutability of the data.",
+    keyPoints: ["Array value type", "let fully immutable", "var mutable", "vs reference collections", "binding equals data"],
+  },
+  {
+    id: "vr-5",
+    topic: "Value & Reference Types",
+    difficulty: "Advanced",
+    question: "How do you get reference-like shared state with a struct, and when would you?",
+    answer:
+      "Wrap a class instance inside the struct (a common pattern for copy-on-write buffers), or store the shared state in a reference type the struct holds. You'd do this deliberately for COW storage optimization, or accidentally create a bug where copies of a 'value type' unexpectedly share mutable state through an embedded class. The lesson: a struct is only a true value type if all its stored properties are value types; an embedded reference shares identity across copies.",
+    keyPoints: ["embed class in struct", "copy-on-write buffer", "shared mutable state", "value type only if all properties value", "identity shared"],
+  },
+
+  // ───────────────────────── Memory Management ─────────────────────────
+  {
+    id: "mem-5",
+    topic: "Memory Management",
+    difficulty: "Advanced",
+    question: "Why should delegates usually be declared `weak`, and what happens if they aren't?",
+    answer:
+      "A view controller often owns an object (e.g. a data source) and sets itself as that object's delegate. If the delegate property is `strong`, you get a retain cycle: the controller retains the object, the object retains the controller back, and neither deallocates. Declaring `weak var delegate` breaks the cycle. This requires the delegate protocol to be class-bound (`protocol X: AnyObject`) because `weak` only applies to reference types.",
+    keyPoints: ["retain cycle", "controller and object retain each other", "weak delegate breaks it", "AnyObject class-bound", "weak reference types only"],
+  },
+  {
+    id: "mem-6",
+    topic: "Memory Management",
+    difficulty: "Advanced",
+    question: "What is a capture list `[weak self]` vs `[unowned self]`, and how do you use the weak-strong dance?",
+    answer:
+      "In an escaping closure, `[weak self]` captures self as an optional weak reference so the closure doesn't keep self alive; `[unowned self]` captures a non-optional non-owning reference that crashes if self is gone. The 'weak-strong dance' re-establishes a strong reference for the closure body: `guard let self = self else { return }`, ensuring self stays alive for the duration of that execution without creating a permanent cycle. Use `weak` when self may legitimately deallocate; `unowned` only when it can't.",
+    keyPoints: ["weak self optional", "unowned self crashes if gone", "weak-strong dance", "guard let self", "escaping closure cycle"],
+  },
+  {
+    id: "mem-7",
+    topic: "Memory Management",
+    difficulty: "Intermediate",
+    question: "What is autorelease and when does it matter in modern Swift?",
+    answer:
+      "Autorelease defers the release of an object until the surrounding autorelease pool drains (typically at the end of the current run loop iteration). In tight loops that create many temporary autoreleased objects — often bridged Foundation/Objective-C APIs like image processing — memory can balloon before the pool drains. Wrapping the loop body in `autoreleasepool { }` drains it each iteration, capping peak memory. Pure Swift objects use ARC directly and rarely need this, but Cocoa interop still can.",
+    keyPoints: ["deferred release", "autorelease pool drains", "run loop", "tight loop memory spike", "autoreleasepool block", "Cocoa interop"],
+  },
+
+  // ───────────────────────── Closures ─────────────────────────
+  {
+    id: "cl-4",
+    topic: "Closures",
+    difficulty: "Intermediate",
+    question: "What is a trailing closure and what is multiple trailing closure syntax?",
+    answer:
+      "If a function's last parameter is a closure, you can write it outside the parentheses as a trailing closure for readability (`items.map { $0 * 2 }`). Since Swift 5.3, if there are multiple closure parameters you can use multiple trailing closures: the first is unlabeled after the parens and the rest are labeled (`UIView.animate(withDuration: 1) { ... } completion: { _ in ... }`). This makes callback-heavy APIs read cleanly.",
+    keyPoints: ["last param closure", "outside parens", "multiple trailing closures", "first unlabeled rest labeled", "readability"],
+  },
+  {
+    id: "cl-5",
+    topic: "Closures",
+    difficulty: "Advanced",
+    question: "What is the difference between a closure capturing a value by reference vs by copy?",
+    answer:
+      "By default, a closure captures variables by reference — it sees and can mutate the current value of a captured `var`, and observes later changes. To capture a snapshot of the value at definition time, list it in the capture list (`[x]`), which copies value types by value. This matters in loops: `for i in 0..<3 { closures.append { print(i) } }` — with `[i]` each closure prints its own 0/1/2; without careful handling you can capture shared mutable state.",
+    keyPoints: ["reference by default", "sees later changes", "capture list copies value", "snapshot at definition", "loop capture pitfall"],
+  },
+
+  // ───────────────────────── Protocols & Generics ─────────────────────────
+  {
+    id: "pg-5",
+    topic: "Protocols & Generics",
+    difficulty: "Intermediate",
+    question: "What is the difference between `Equatable`, `Hashable`, `Comparable`, and `Identifiable`?",
+    answer:
+      "`Equatable` requires `==` (are two values equal). `Hashable` extends Equatable and adds `hash(into:)`, letting a type be a Set element or Dictionary key. `Comparable` adds ordering (`<`), enabling sorting. `Identifiable` requires an `id` property for stable identity — used by SwiftUI's `List`/`ForEach` to track items across updates. Swift can synthesize Equatable and Hashable for structs/enums whose members already conform.",
+    keyPoints: ["Equatable ==", "Hashable hash Set key", "Comparable ordering sort", "Identifiable id", "synthesized conformance"],
+  },
+  {
+    id: "pg-6",
+    topic: "Protocols & Generics",
+    difficulty: "Advanced",
+    question: "What is type erasure and why is `AnyView` or `AnyPublisher` needed?",
+    answer:
+      "Protocols with associated types (or `Self` requirements) can't be used as concrete types, and generic types expose their type parameters in signatures, which can leak implementation details or prevent storing heterogeneous values. Type erasure wraps the underlying type in a concrete box that forwards calls, hiding the specific type. `AnyView` erases a SwiftUI view's concrete type; `AnyPublisher` erases a Combine publisher's chain. The cost is losing compile-time specialization and some performance.",
+    keyPoints: ["associated types can't be concrete", "wrap in box", "hide underlying type", "AnyView AnyPublisher", "loses specialization"],
+  },
+  {
+    id: "pg-7",
+    topic: "Protocols & Generics",
+    difficulty: "Advanced",
+    question: "What is the difference between generic constraints with `where` clauses and protocol composition?",
+    answer:
+      "Protocol composition (`A & B`) requires a value to conform to multiple protocols at once, used as a type. A `where` clause on a generic adds constraints on the type parameters or their associated types — e.g. `func f<T>(_ x: T) where T: Collection, T.Element: Equatable`. `where` is more expressive: it can constrain associated types and express relationships between multiple type parameters, which composition alone cannot. Conditional conformance (`extension Array: X where Element: X`) also uses `where`.",
+    keyPoints: ["composition A & B multiple protocols", "where constrains type params", "associated type constraints", "relationships between params", "conditional conformance"],
+  },
+
+  // ───────────────────────── Concurrency ─────────────────────────
+  {
+    id: "con-8",
+    topic: "Concurrency",
+    difficulty: "Intermediate",
+    question: "What is the difference between `async let` and a `TaskGroup`?",
+    answer:
+      "`async let` binds a fixed, statically-known number of concurrent child tasks — you write one binding per task and `await` them where you use the results. A `TaskGroup` runs a dynamic number of child tasks (e.g. one per element in a collection) added in a loop, collecting results as they finish. Both are structured concurrency: children can't outlive the scope, and errors/cancellation propagate. Use `async let` for a handful of known parallel calls, TaskGroup for a variable count.",
+    keyPoints: ["async let fixed known count", "TaskGroup dynamic count", "structured concurrency", "child tasks", "await results"],
+  },
+  {
+    id: "con-9",
+    topic: "Concurrency",
+    difficulty: "Intermediate",
+    question: "What is `Task { }` and how does it differ from `Task.detached { }`?",
+    answer:
+      "`Task { }` creates an unstructured task that inherits the current actor context, priority, and task-local values — so a `Task` started in a `@MainActor` context runs its body on the main actor by default. `Task.detached { }` creates a task with no inherited context: no actor isolation, default priority, no task-locals — it always runs off the current actor. Prefer plain `Task` so inheritance keeps UI code on the main actor; reach for `detached` only when you deliberately want to escape the current context.",
+    keyPoints: ["Task inherits context", "actor priority task-locals", "detached inherits nothing", "runs off current actor", "prefer plain Task"],
+  },
+  {
+    id: "con-10",
+    topic: "Concurrency",
+    difficulty: "Advanced",
+    question: "What is an `AsyncSequence` and how do you consume one?",
+    answer:
+      "An `AsyncSequence` produces elements asynchronously over time, consumed with `for await element in sequence`. Each iteration can suspend until the next element is ready — ideal for streams like network bytes (`URLSession.bytes`), notifications, or a custom `AsyncStream` you feed from a callback. It supports async versions of `map`, `filter`, etc. Iteration can throw and can be cancelled; breaking out of the loop or task cancellation stops consumption cleanly.",
+    keyPoints: ["elements over time", "for await in", "suspends per element", "AsyncStream", "URLSession.bytes", "cancellable"],
+  },
+  {
+    id: "con-11",
+    topic: "Concurrency",
+    difficulty: "Advanced",
+    question: "How do you bridge a completion-handler API into async/await?",
+    answer:
+      "Use `withCheckedContinuation` (or `withCheckedThrowingContinuation` for throwing APIs). You wrap the callback-based call and resume the continuation exactly once with the result or error: `try await withCheckedThrowingContinuation { cont in api.load { result in cont.resume(with: result) } }`. The rule is critical — resuming zero times leaks/hangs the task forever, resuming more than once crashes. The 'checked' variants trap misuse at runtime; `withUnsafeContinuation` skips the checks for performance.",
+    keyPoints: ["withCheckedContinuation", "wrap callback", "resume exactly once", "resume twice crashes", "resume zero hangs", "throwing variant"],
+  },
+  {
+    id: "con-12",
+    topic: "Concurrency",
+    difficulty: "Advanced",
+    question: "What does `@MainActor` do and how does it differ from `DispatchQueue.main.async`?",
+    answer:
+      "`@MainActor` is a global actor that guarantees the annotated type, function, or property runs on the main thread, enforced by the compiler — cross-actor calls are `await`ed and the compiler catches unsafe access at build time. `DispatchQueue.main.async` is a runtime hop with no compile-time guarantees; forget it on one path and you get a hard-to-find threading bug. `@MainActor` moves main-thread safety from a runtime convention into the type system, which is why UI-facing code (view models, SwiftUI views) is increasingly annotated with it.",
+    keyPoints: ["MainActor global actor", "compiler enforced", "main thread guarantee", "DispatchQueue runtime hop", "no compile-time check", "type system safety"],
+  },
+
+  // ───────────────────────── SwiftUI ─────────────────────────
+  {
+    id: "su-6",
+    topic: "SwiftUI",
+    difficulty: "Beginner",
+    question: "What is the difference between a `VStack`, `LazyVStack`, and `List`?",
+    answer:
+      "`VStack` lays out all its children eagerly and immediately — fine for a small, fixed number of views. `LazyVStack` (inside a `ScrollView`) only creates child views as they scroll into view, so it scales to large data without building everything up front. `List` is the highest-level container: lazy by default, adds platform styling, separators, swipe actions, selection, and section support. Use `List` for data-driven scrollable content, `LazyVStack` when you need custom scroll layout, `VStack` for small static groups.",
+    keyPoints: ["VStack eager small", "LazyVStack lazy on scroll", "List lazy styled features", "swipe selection sections", "large data"],
+  },
+  {
+    id: "su-7",
+    topic: "SwiftUI",
+    difficulty: "Intermediate",
+    question: "How do `.onAppear`, `.task`, and `init` differ for loading data in a SwiftUI view?",
+    answer:
+      "`init` runs whenever the view struct is re-created (which can be very often, since views are cheap value types) — never do side effects or data loading there. `.onAppear` runs when the view appears on screen; it's synchronous and can fire multiple times (e.g. navigating back). `.task` runs an async job tied to the view's lifetime — it starts when the view appears and is automatically cancelled when the view disappears, making it the modern choice for async loading without manual cancellation.",
+    keyPoints: ["init runs often no side effects", "onAppear on screen synchronous", "task async lifetime-tied", "auto cancelled on disappear", "modern async loading"],
+  },
+  {
+    id: "su-8",
+    topic: "SwiftUI",
+    difficulty: "Intermediate",
+    question: "What is the role of the `id` in `ForEach` and what bugs come from getting it wrong?",
+    answer:
+      "SwiftUI uses each item's identity to diff the list across updates — deciding which rows to insert, delete, move, or update, and preserving per-row state (like a text field's contents) across reorders. Stable identity comes from `Identifiable` or an explicit `id:` key path. Using array indices as ids, or a non-unique/unstable id, causes wrong animations, state bleeding between rows, and broken deletions. The id must be stable and unique for the item's lifetime.",
+    keyPoints: ["identity diffs list", "insert delete move", "preserve per-row state", "index id causes bugs", "state bleeding", "stable unique"],
+  },
+  {
+    id: "su-9",
+    topic: "SwiftUI",
+    difficulty: "Advanced",
+    question: "What is `GeometryReader` and why should you use it sparingly?",
+    answer:
+      "`GeometryReader` exposes the size and coordinate space of its container via a `GeometryProxy`, letting you build layouts that depend on available space. The catch: it greedily takes all offered space and returns a flexible frame, which can disrupt the surrounding layout and cause sizing surprises; it also re-evaluates its closure on every size change. Prefer layout modifiers, `Layout` protocol, or `containerRelativeFrame` when possible, and confine GeometryReader to the smallest subtree that actually needs measurement.",
+    keyPoints: ["GeometryProxy size coordinate space", "takes all offered space", "flexible frame disrupts layout", "re-evaluates on change", "confine to small subtree"],
+  },
+  {
+    id: "su-10",
+    topic: "SwiftUI",
+    difficulty: "Advanced",
+    question: "What is `PreferenceKey` and what problem does it solve?",
+    answer:
+      "SwiftUI data normally flows top-down (parent to child) via the environment and bindings. A `PreferenceKey` lets a child pass data back up to an ancestor — for example a child reporting its measured size or a computed anchor. The child sets a preference with `.preference(key:value:)`, and an ancestor reads it with `.onPreferenceChange` or `.overlayPreferenceValue`. It's the mechanism behind things like custom tab bars that need to know a selected item's frame, solving the otherwise one-directional data flow.",
+    keyPoints: ["child to parent data", "reverse of top-down flow", "preference modifier", "onPreferenceChange", "report size or anchor"],
+  },
+
+  // ───────────────────────── UIKit ─────────────────────────
+  {
+    id: "uk-5",
+    topic: "UIKit",
+    difficulty: "Beginner",
+    question: "What is the difference between `frame` and `bounds` of a UIView?",
+    answer:
+      "`frame` describes a view's position and size in its superview's coordinate system. `bounds` describes the view's own internal coordinate system — its origin is usually `(0,0)` and its size matches the frame's size (absent transforms). Changing `bounds.origin` scrolls the view's content (how scroll views work). When a view is rotated with a transform, `frame` becomes the bounding box of the transformed view and can be misleading, while `bounds` stays constant.",
+    keyPoints: ["frame in superview coords", "bounds own coord system", "bounds origin scrolls content", "transform affects frame", "bounds constant"],
+  },
+  {
+    id: "uk-6",
+    topic: "UIKit",
+    difficulty: "Intermediate",
+    question: "What is the responder chain in UIKit?",
+    answer:
+      "The responder chain is the ordered list of `UIResponder` objects (views, view controllers, the window, the app delegate) that events and actions travel up when the first responder doesn't handle them. A touch or action message starts at the first responder (e.g. the tapped view) and propagates up the hierarchy until something handles it or it's dropped. It powers `target: nil` actions (`sendAction`), keyboard/menu handling, and `becomeFirstResponder`/`resignFirstResponder` for text input focus.",
+    keyPoints: ["UIResponder chain", "events travel up", "first responder", "propagates until handled", "target nil actions", "becomeFirstResponder"],
+  },
+  {
+    id: "uk-7",
+    topic: "UIKit",
+    difficulty: "Advanced",
+    question: "What is `UITableViewDiffableDataSource` and why is it preferred over the classic data source?",
+    answer:
+      "A diffable data source manages a table/collection view by applying `NSDiffableDataSourceSnapshot`s — you describe the desired state (sections and item identifiers) and it computes and animates the exact inserts, deletes, and moves for you. This eliminates the classic pitfall of manually calling `insertRows`/`deleteRows` in sync with your model, which crashes with 'inconsistent data' if counts mismatch. It requires `Hashable` section and item identifiers and makes updates declarative and crash-resistant.",
+    keyPoints: ["snapshot describes state", "computes diff automatically", "animates inserts deletes moves", "no manual insert/delete crashes", "Hashable identifiers", "declarative"],
+  },
+
+  // ───────────────────────── Architecture & Patterns ─────────────────────────
+  {
+    id: "arch-6",
+    topic: "Architecture & Patterns",
+    difficulty: "Intermediate",
+    question: "What is the difference between MVVM and VIPER?",
+    answer:
+      "MVVM has three roles — Model, View, and ViewModel — and relies on binding between view and view model; it's lightweight and pairs naturally with SwiftUI/Combine. VIPER splits responsibilities into five: View, Interactor (business logic), Presenter (formatting/coordination), Entity (model), and Router (navigation). VIPER enforces stronger separation and testability for very large teams/codebases but adds boilerplate and indirection. MVVM is usually enough for most apps; VIPER suits large modular projects with strict layering.",
+    keyPoints: ["MVVM three roles binding", "VIPER five roles", "Interactor Presenter Router", "VIPER more separation boilerplate", "MVVM lighter"],
+  },
+  {
+    id: "arch-7",
+    topic: "Architecture & Patterns",
+    difficulty: "Advanced",
+    question: "What is a unidirectional data flow architecture (e.g. Redux/TCA) and what are its benefits?",
+    answer:
+      "Unidirectional data flow keeps a single source of truth (State), mutated only by a pure reducer in response to Actions, with side effects isolated in a controlled layer (Effects). The view renders from state and dispatches actions; data flows one way: action → reducer → new state → view. Benefits are predictability, testability (reducers are pure functions), time-travel debugging, and easy state restoration. The cost is boilerplate and a learning curve. The Composable Architecture (TCA) is the popular Swift implementation.",
+    keyPoints: ["single source of truth state", "pure reducer", "actions mutate state", "effects isolated", "one-way flow", "testable predictable", "TCA"],
+  },
+  {
+    id: "arch-8",
+    topic: "Architecture & Patterns",
+    difficulty: "Intermediate",
+    question: "What is the difference between the delegate pattern and closures/callbacks for communication?",
+    answer:
+      "Both let one object notify another. Delegation uses a protocol and a (usually weak) delegate reference — good for a persistent one-to-one relationship with several related callbacks (e.g. UITableViewDelegate). Closures/callbacks are lighter for a single, localized callback and keep the calling code together, but you must manage capture semantics to avoid retain cycles. Rule of thumb: many related events over a long-lived relationship → delegate; a one-off result or single event → closure.",
+    keyPoints: ["delegate protocol weak", "many related callbacks", "closure single localized", "capture cycle risk", "one-to-one vs one-off"],
+  },
+
+  // ───────────────────────── Networking ─────────────────────────
+  {
+    id: "net-4",
+    topic: "Networking",
+    difficulty: "Intermediate",
+    question: "How do you handle authentication tokens and refresh in a networking layer?",
+    answer:
+      "Store tokens securely in the Keychain (never UserDefaults). Attach the access token as an `Authorization: Bearer` header via a request adapter/interceptor. When a request returns 401, pause outgoing requests, use the refresh token to obtain a new access token, then retry the failed requests — serializing refresh so concurrent 401s don't trigger multiple refreshes. If refresh fails, log the user out. Keep this logic centralized in the networking layer, not scattered across call sites.",
+    keyPoints: ["Keychain not UserDefaults", "Bearer header interceptor", "401 triggers refresh", "retry after refresh", "serialize concurrent refresh", "logout on failure"],
+  },
+  {
+    id: "net-5",
+    topic: "Networking",
+    difficulty: "Advanced",
+    question: "What is SSL pinning and when would you use it?",
+    answer:
+      "SSL/certificate pinning validates that the server's certificate (or public key) matches a copy embedded in the app, rather than trusting any CA-signed cert. It defends against man-in-the-middle attacks where an attacker installs a rogue trusted root (e.g. on a compromised or proxied network). You implement it in `URLSessionDelegate`'s `didReceive challenge` by comparing the server trust's certificate/public key against your pinned value. The trade-off: certificate rotation requires an app update, so pin the public key or use backup pins.",
+    keyPoints: ["validate server cert against embedded copy", "defends MITM", "URLSessionDelegate challenge", "public key pinning", "rotation needs app update", "backup pins"],
+  },
+  {
+    id: "net-6",
+    topic: "Networking",
+    difficulty: "Intermediate",
+    question: "What HTTP status code ranges should a client handle, and how?",
+    answer:
+      "2xx is success (200 OK, 201 Created, 204 No Content — decode or treat as empty). 3xx is redirection (usually handled by URLSession automatically). 4xx is client error: 400 bad request, 401 unauthorized (refresh/login), 403 forbidden, 404 not found, 429 too many requests (back off / respect Retry-After). 5xx is server error (500, 502, 503) — safe to retry with exponential backoff. Always read the actual status from `HTTPURLResponse.statusCode`; a non-nil `data` doesn't mean success.",
+    keyPoints: ["2xx success", "4xx client error 401 429", "5xx server retry backoff", "429 Retry-After", "check HTTPURLResponse statusCode"],
+  },
+
+  // ───────────────────────── Persistence ─────────────────────────
+  {
+    id: "per-4",
+    topic: "Persistence",
+    difficulty: "Intermediate",
+    question: "What is SwiftData and how does it relate to Core Data?",
+    answer:
+      "SwiftData (iOS 17+) is Apple's modern persistence framework built on top of Core Data's engine but with a Swift-first, declarative API. You annotate a plain class with `@Model` and it becomes persistable; you query with `@Query` in SwiftUI and mutate via a `ModelContext`. It removes the `.xcdatamodeld` editor and much boilerplate, integrates tightly with SwiftUI, and interoperates with Core Data. For apps that must support iOS 16 or need advanced Core Data features not yet exposed, Core Data remains the choice.",
+    keyPoints: ["iOS 17 modern", "built on Core Data engine", "@Model @Query", "ModelContext", "declarative Swift-first", "SwiftUI integration"],
+  },
+  {
+    id: "per-5",
+    topic: "Persistence",
+    difficulty: "Intermediate",
+    question: "Why is the Keychain used for sensitive data instead of UserDefaults?",
+    answer:
+      "UserDefaults stores data as an unencrypted plist in the app's sandbox — readable from a backup or a jailbroken device — so it must never hold passwords, tokens, or secrets. The Keychain is an encrypted, OS-managed secure store with hardware-backed protection, per-item access control (e.g. require device unlock or biometrics), and accessibility classes controlling when items are readable. Use it for credentials, tokens, and encryption keys; UserDefaults is for non-sensitive preferences only.",
+    keyPoints: ["UserDefaults unencrypted plist", "readable from backup", "Keychain encrypted OS-managed", "access control biometrics", "accessibility classes", "tokens credentials"],
+  },
+  {
+    id: "per-6",
+    topic: "Persistence",
+    difficulty: "Advanced",
+    question: "How do you perform a lightweight Core Data migration?",
+    answer:
+      "When the data model changes, Core Data needs to migrate existing stores. Lightweight (automatic) migration handles simple changes — adding/removing attributes or entities, renaming via a renaming identifier — by inferring the mapping. You enable it by setting `shouldMigrateStoreAutomatically` and `shouldInferMappingModelAutomatically` to true on the store description (the default for `NSPersistentContainer`). For complex changes (splitting entities, transforming data), you provide a custom mapping model and possibly an `NSEntityMigrationPolicy`. Always version the model with a new model version.",
+    keyPoints: ["model change needs migration", "lightweight infers mapping", "add remove rename attributes", "shouldInferMappingModelAutomatically", "custom mapping for complex", "version the model"],
+  },
+
+  // ───────────────────────── Testing ─────────────────────────
+  {
+    id: "test-4",
+    topic: "Testing",
+    difficulty: "Intermediate",
+    question: "What is the difference between unit tests, integration tests, and UI tests?",
+    answer:
+      "Unit tests verify a single isolated component (a function or type) quickly with dependencies mocked. Integration tests verify that multiple components work together — e.g. a repository calling a real (or in-memory) database, or a networking layer decoding a real response — so they're slower and catch wiring bugs unit tests miss. UI tests (XCUITest) drive the actual app through the accessibility layer, tapping and typing like a user, to verify end-to-end flows; they're the slowest and most brittle. A healthy suite is mostly unit tests (the test pyramid).",
+    keyPoints: ["unit isolated fast mocked", "integration components together", "UI XCUITest end-to-end", "slowest most brittle", "test pyramid"],
+  },
+  {
+    id: "test-5",
+    topic: "Testing",
+    difficulty: "Advanced",
+    question: "How do you make code testable that depends on the current date, network, or randomness?",
+    answer:
+      "Inject the nondeterministic dependency behind a protocol instead of calling it directly. For dates, inject a `() -> Date` clock or a `DateProvider`; in tests supply a fixed date. For network, inject a `URLSession` (or a `URLProtocol` stub) so tests return canned responses without hitting the wire. For randomness, inject a `RandomNumberGenerator` (Swift lets you pass a seeded one). The principle: push the impure boundary to the edges and pass it in, so tests control it and results are deterministic.",
+    keyPoints: ["inject behind protocol", "date provider clock", "URLProtocol stub network", "seeded RandomNumberGenerator", "control at boundary", "deterministic"],
+  },
+  {
+    id: "test-6",
+    topic: "Testing",
+    difficulty: "Intermediate",
+    question: "What is the difference between XCTest and the newer Swift Testing framework?",
+    answer:
+      "XCTest is the long-standing framework: subclass `XCTestCase`, name methods `test...`, and use the `XCTAssert` family. Swift Testing (introduced 2024) is a modern macro-based framework: mark tests with `@Test` (any function, including in structs), assert with `#expect` and `#require`, parameterize tests with arguments, and use `Suite`s and tags for organization. It gives clearer failure messages, better async support, and parallel execution by default. Both can coexist in a project; UI tests still use XCTest/XCUITest.",
+    keyPoints: ["XCTest XCTestCase XCTAssert", "Swift Testing macros @Test", "#expect #require", "parameterized tests", "clearer messages parallel", "coexist"],
+  },
+
+  // ───────────────────────── Combine ─────────────────────────
+  {
+    id: "comb-1",
+    topic: "Combine",
+    difficulty: "Beginner",
+    question: "What are Publishers, Subscribers, and Operators in Combine?",
+    answer:
+      "Combine is Apple's declarative reactive framework. A Publisher emits a stream of values (and a completion or failure) over time. A Subscriber receives them (e.g. via `sink` or `assign`). Operators sit between them, transforming the stream — `map`, `filter`, `debounce`, `combineLatest`, etc. — each returning a new publisher. You compose a pipeline from a publisher through operators to a subscriber, and you keep the returned `AnyCancellable` alive (usually in a `Set<AnyCancellable>`) or the subscription is torn down.",
+    keyPoints: ["Publisher emits values over time", "Subscriber sink assign", "Operators transform", "compose pipeline", "AnyCancellable stored", "reactive declarative"],
+  },
+  {
+    id: "comb-2",
+    topic: "Combine",
+    difficulty: "Intermediate",
+    question: "What is the difference between `PassthroughSubject` and `CurrentValueSubject`?",
+    answer:
+      "Both are subjects — publishers you can imperatively send values into with `.send(_:)`. A `PassthroughSubject` has no notion of a current value: subscribers only receive values sent after they subscribe. A `CurrentValueSubject` holds a current value, exposes it via `.value`, and immediately delivers that current value to each new subscriber before subsequent updates. Use CurrentValueSubject for state that has a 'now' value (like a view model property), PassthroughSubject for discrete events (like a button tap).",
+    keyPoints: ["subjects send imperatively", "Passthrough no current value", "only after subscribe", "CurrentValue holds value replays", "state vs events"],
+  },
+  {
+    id: "comb-3",
+    topic: "Combine",
+    difficulty: "Advanced",
+    question: "How do you avoid memory leaks and retain cycles with Combine subscriptions?",
+    answer:
+      "Store cancellables in a `Set<AnyCancellable>` owned by the object; when that object deallocates, the set drains and subscriptions cancel automatically. In `sink`/closures that reference `self`, use `[weak self]` to avoid a cycle where self holds the cancellable and the closure holds self. Avoid subscribing without storing the cancellable (it cancels immediately) or storing it somewhere longer-lived than intended (it leaks). `assign(to:on:)` captures the target strongly, so prefer `assign(to: &$published)` or a weak sink for self.",
+    keyPoints: ["store in Set AnyCancellable", "drains on dealloc", "weak self in sink", "cycle self holds cancellable", "assign captures strongly", "assign to &$published"],
+  },
+  {
+    id: "comb-4",
+    topic: "Combine",
+    difficulty: "Intermediate",
+    question: "When would you choose Combine vs async/await?",
+    answer:
+      "async/await excels at one-shot asynchronous operations with a single result (a network call, a file read) — straight-line code with structured concurrency and cancellation. Combine excels at streams of values over time and reactive composition — debouncing search text, combining multiple UI inputs, observing `@Published` properties, or reacting to notifications. Many codebases use async/await for imperative flows and Combine (or the newer `AsyncSequence`/Observation) for continuous streams. Apple is steering new APIs toward async/await and Observation, so Combine's role is narrowing.",
+    keyPoints: ["async/await one-shot result", "Combine streams over time", "debounce combineLatest @Published", "reactive composition", "async trend Observation"],
+  },
+
+  // ───────────────────────── Swift 6 & Data Races ─────────────────────────
+  {
+    id: "s6-1",
+    topic: "Swift 6 & Data Races",
+    difficulty: "Intermediate",
+    question: "What is the `Sendable` protocol and why does it matter?",
+    answer:
+      "`Sendable` marks a type as safe to pass across concurrency boundaries (between actors or into a `Task`) without introducing data races. Value types made of Sendable members are implicitly Sendable; final classes with only immutable state can be marked Sendable; classes with mutable state generally can't be unless they protect it (e.g. with a lock) and are marked `@unchecked Sendable`. In Swift 6's strict concurrency, the compiler enforces that only Sendable values cross those boundaries, turning potential data races into compile errors.",
+    keyPoints: ["safe across concurrency boundaries", "value types implicit", "immutable final class", "@unchecked Sendable with lock", "compiler enforces", "prevents data races"],
+  },
+  {
+    id: "s6-2",
+    topic: "Swift 6 & Data Races",
+    difficulty: "Advanced",
+    question: "What does Swift 6's strict concurrency checking change compared to Swift 5?",
+    answer:
+      "Swift 6 makes data-race safety a compile-time guarantee. It enforces actor isolation and `Sendable` conformance across all concurrency boundaries — accessing actor-isolated state from outside without `await`, or capturing non-Sendable values in a `Task`, becomes an error rather than a latent runtime bug. You can adopt it incrementally: enable 'complete' strict-concurrency checking as warnings in Swift 5 mode, fix them, then switch to the Swift 6 language mode. The payoff is eliminating an entire class of hard-to-reproduce threading bugs at build time.",
+    keyPoints: ["data-race safety at compile time", "enforces actor isolation Sendable", "errors not runtime bugs", "incremental adoption warnings", "complete checking", "Swift 6 language mode"],
+  },
+  {
+    id: "s6-3",
+    topic: "Swift 6 & Data Races",
+    difficulty: "Advanced",
+    question: "What is actor isolation and what is a 'nonisolated' member?",
+    answer:
+      "An actor's mutable state is isolated: it can only be touched synchronously from inside the actor; outside callers must `await`, and the runtime serializes access so there are no data races. Marking a member `nonisolated` opts it out of that isolation — it can't access the actor's mutable state but can be called synchronously from anywhere (useful for computed properties over immutable data, or `Hashable`/`Sendable` conformances). `nonisolated` is how you expose safe, isolation-free functionality on an actor without forcing every caller to await.",
+    keyPoints: ["actor state isolated", "outside must await", "serialized access no races", "nonisolated opts out", "no mutable state access", "sync from anywhere"],
+  },
+  {
+    id: "s6-4",
+    topic: "Swift 6 & Data Races",
+    difficulty: "Advanced",
+    question: "What is the `@Observable` macro and how does it change view-model code vs `ObservableObject`?",
+    answer:
+      "`@Observable` (Observation framework, iOS 17+) is a macro you apply to a class so SwiftUI tracks which properties a view actually reads and re-renders only when those change. Compared to `ObservableObject`: you drop `@Published` on each property, you don't need `@ObservedObject`/`@StateObject` wrappers just to observe (a plain `@State` or property reference works, with `@Bindable` for bindings), and invalidation is per-property rather than 'any published change re-renders everyone.' The result is less boilerplate and fewer unnecessary view updates.",
+    keyPoints: ["Observation macro iOS 17", "per-property tracking", "drop @Published", "no @ObservedObject needed", "@Bindable for bindings", "fewer re-renders"],
+  },
+
+  // ───────────────────────── Performance ─────────────────────────
+  {
+    id: "perf-1",
+    topic: "Performance",
+    difficulty: "Intermediate",
+    question: "How would you diagnose and fix a laggy scrolling table or collection view?",
+    answer:
+      "Profile with Instruments' Time Profiler and the Core Animation/Animation Hitches tools to find where frame time goes. Common causes: doing expensive work (image decoding, date formatting, layout math) synchronously in `cellForRowAt`; not reusing cells; triggering offscreen rendering with shadows/masks/`cornerRadius` on large views; or blocking the main thread with sync I/O. Fixes: move heavy work off the main thread and cache results, decode/resize images in the background, precompute cell heights, avoid transparency and expensive layer effects, and reuse cells properly.",
+    keyPoints: ["Time Profiler Core Animation", "heavy work in cellForRowAt", "cache decode images background", "offscreen rendering shadows", "reuse cells", "main thread blocking"],
+  },
+  {
+    id: "perf-2",
+    topic: "Performance",
+    difficulty: "Advanced",
+    question: "What causes app launch to be slow and how do you improve it?",
+    answer:
+      "Launch splits into pre-main (dynamic linker loading dylibs, ObjC/Swift runtime setup, static initializers) and post-main (app delegate, first frame). Slow launches come from too many dynamic frameworks, heavy `+load`/static initializers, synchronous work in `didFinishLaunching` (network, disk, database setup), and building a complex first screen. Improvements: reduce/merge dynamic frameworks, defer non-critical setup off the launch path (lazy initialization), do I/O asynchronously, and keep the initial UI light. Measure with Instruments' App Launch template and `DYLD_PRINT_STATISTICS`.",
+    keyPoints: ["pre-main dylibs static init", "post-main didFinishLaunching first frame", "too many dynamic frameworks", "defer non-critical work", "async I/O", "App Launch instrument"],
+  },
+  {
+    id: "perf-3",
+    topic: "Performance",
+    difficulty: "Advanced",
+    question: "How do value types and copy-on-write help performance, and where can they hurt?",
+    answer:
+      "Value types avoid heap allocation and reference counting for small data, keep memory local, and eliminate aliasing bugs. Copy-on-write means large value collections (Array, Dictionary) share storage until mutated, so passing them around is cheap. Where they hurt: very large structs copied frequently across boundaries can cost more than a reference; a struct with many stored properties or embedded in a hot path may thrash. Diagnose with Instruments; if a large value type is copied a lot, consider a class or COW wrapper. Measure rather than assume.",
+    keyPoints: ["value types no heap no refcount", "COW shares until mutation", "cheap passing", "large struct copies costly", "COW wrapper or class", "measure"],
+  },
+
+  // ───────────────────────── System Design ─────────────────────────
+  {
+    id: "sd-1",
+    topic: "System Design",
+    difficulty: "Advanced",
+    question: "How would you design an offline-first feature (e.g. a notes app that syncs)?",
+    answer:
+      "Treat the local store as the source of truth: the UI reads and writes locally (Core Data/SwiftData/SQLite) so it works with no network. Queue mutations and sync them to the server when connectivity returns, using a background sync engine. Handle conflicts with a strategy — last-write-wins with timestamps, per-field merging, or CRDTs for collaborative edits. Track each record's sync state (pending/synced/failed), use monotonic version numbers or updated-at, and reconcile on push/pull. Observe reachability, retry with backoff, and surface sync status to the user.",
+    keyPoints: ["local store source of truth", "queue mutations sync later", "conflict resolution last-write-wins", "sync state per record", "reachability retry backoff", "reconcile push pull"],
+  },
+  {
+    id: "sd-2",
+    topic: "System Design",
+    difficulty: "Advanced",
+    question: "How would you design an image loading and caching system (like SDWebImage/Kingfisher)?",
+    answer:
+      "Given a URL, check a two-tier cache: a fast in-memory `NSCache` (auto-evicts under pressure) keyed by URL, then a disk cache. On a miss, download asynchronously, decode/downsample off the main thread to the target display size, store in both caches, and deliver on the main thread. Deduplicate in-flight requests for the same URL, cancel downloads when a cell is reused (tie the request to the cell), respect cache expiration/HTTP headers, and cap memory/disk with an eviction policy. Expose a simple `setImage(url:)` API that handles placeholders and cancellation.",
+    keyPoints: ["two-tier memory NSCache disk", "async download", "decode downsample off main", "dedupe in-flight", "cancel on cell reuse", "eviction policy"],
+  },
+  {
+    id: "sd-3",
+    topic: "System Design",
+    difficulty: "Advanced",
+    question: "How would you architect a large app for modularity and team scalability?",
+    answer:
+      "Split the app into feature modules (Swift packages or frameworks), each owning its UI, logic, and tests, depending only on abstraction layers — not on each other directly. Share cross-cutting concerns (networking, design system, persistence) as separate foundation modules. Use protocols and dependency injection at module boundaries so features are independently buildable and testable, and wire them at the app/composition-root layer. Benefits: faster incremental builds, clear ownership, enforced boundaries, and the ability for teams to work in parallel. Watch for over-modularization and circular dependencies.",
+    keyPoints: ["feature modules Swift packages", "own UI logic tests", "shared foundation modules", "protocols DI at boundaries", "composition root wiring", "parallel teams faster builds"],
+  },
+
+  // ───────────────────────── Coding Practice ─────────────────────────
+  {
+    id: "code-7",
+    topic: "Coding Practice",
+    difficulty: "Beginner",
+    question: "Count the frequency of each character in a string.",
+    answer:
+      "Iterate once and tally in a dictionary using `default` subscripting — O(n) time:\n\n```swift\nfunc frequencies(_ s: String) -> [Character: Int] {\n    var counts: [Character: Int] = [:]\n    for ch in s {\n        counts[ch, default: 0] += 1\n    }\n    return counts\n}\n```\n\nThe `[key, default: 0]` subscript reads 0 for a missing key and writes back the incremented value in one step. This pattern generalizes to grouping and counting problems (anagrams, most-frequent element).",
+    keyPoints: ["dictionary tally", "default subscript", "O(n) one pass", "counts key default 0"],
+  },
+  {
+    id: "code-8",
+    topic: "Coding Practice",
+    difficulty: "Intermediate",
+    question: "Determine whether two strings are anagrams of each other.",
+    answer:
+      "Two strings are anagrams if they contain the same characters with the same counts. Fastest check: compare their character-frequency dictionaries, or (for the common case) compare sorted character arrays. Frequency approach is O(n); sorting is O(n log n):\n\n```swift\nfunc isAnagram(_ a: String, _ b: String) -> Bool {\n    guard a.count == b.count else { return false }\n    var counts: [Character: Int] = [:]\n    for ch in a { counts[ch, default: 0] += 1 }\n    for ch in b {\n        counts[ch, default: 0] -= 1\n        if counts[ch]! < 0 { return false }\n    }\n    return true\n}\n```\n\nClarify case sensitivity and whitespace handling first.",
+    keyPoints: ["same characters same counts", "frequency dictionary", "O(n)", "increment then decrement", "clarify case whitespace"],
+  },
+  {
+    id: "code-9",
+    topic: "Coding Practice",
+    difficulty: "Intermediate",
+    question: "Find the first non-repeating character in a string.",
+    answer:
+      "Do two passes: first tally each character's count, then scan the string in order and return the first character whose count is 1. This is O(n) time; a single-pass frequency dictionary loses order, so the second ordered scan matters.\n\n```swift\nfunc firstUnique(_ s: String) -> Character? {\n    var counts: [Character: Int] = [:]\n    for ch in s { counts[ch, default: 0] += 1 }\n    for ch in s where counts[ch] == 1 { return ch }\n    return nil\n}\n```\n\nMention that iterating the String preserves original order, which the answer depends on.",
+    keyPoints: ["two passes", "tally then ordered scan", "first count == 1", "O(n)", "order matters"],
+  },
+  {
+    id: "code-10",
+    topic: "Coding Practice",
+    difficulty: "Advanced",
+    question: "Implement a debounced/throttled function generically in Swift.",
+    answer:
+      "Debounce fires only after a quiet period; throttle fires at most once per interval. A reusable debouncer cancels its pending work item on each call:\n\n```swift\nfinal class Debouncer {\n    private let delay: TimeInterval\n    private var workItem: DispatchWorkItem?\n    init(delay: TimeInterval) { self.delay = delay }\n    func call(_ action: @escaping () -> Void) {\n        workItem?.cancel()\n        let item = DispatchWorkItem(block: action)\n        workItem = item\n        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: item)\n    }\n}\n```\n\nThrottle instead records the last fire time and ignores calls until the interval elapses. Discuss where each fits: debounce for search-as-you-type, throttle for scroll/resize handlers.",
+    keyPoints: ["debounce after quiet period", "throttle at most once per interval", "cancel pending work item", "asyncAfter", "search vs scroll use case"],
+  },
+  {
+    id: "code-11",
+    topic: "Coding Practice",
+    difficulty: "Advanced",
+    question: "Implement a generic LRU (least-recently-used) cache.",
+    answer:
+      "An LRU cache evicts the least-recently-used entry when it exceeds capacity. The classic O(1) design combines a hash map (key → node) with a doubly linked list ordered by recency: on access, move the node to the front; on insert past capacity, remove the tail. In Swift you can implement the linked list with class nodes, or, for an interview, approximate with a dictionary plus an ordered array of keys (O(n) on access but simpler to write). State the capacity, get, and put semantics, and that both operations aim for O(1) with the map + list design.",
+    keyPoints: ["evict least recently used", "hash map plus doubly linked list", "O(1) get put", "move to front on access", "remove tail on overflow", "capacity"],
+  },
+  {
+    id: "code-12",
+    topic: "Coding Practice",
+    difficulty: "Intermediate",
+    question: "Group an array of objects by a key (e.g. group people by city).",
+    answer:
+      "Use `Dictionary(grouping:by:)`, which builds a `[Key: [Element]]` in one line and O(n):\n\n```swift\nlet byCity = Dictionary(grouping: people, by: { $0.city })\n```\n\nTo transform values (e.g. get just names per city), map over the grouped dictionary's values with `mapValues`. This is far cleaner than manually creating arrays inside a dictionary with `default` subscripting, though that manual approach is a good fallback to explain the underlying mechanics.",
+    keyPoints: ["Dictionary grouping by", "Key to array of elements", "O(n) one line", "mapValues to transform", "vs manual default subscript"],
   },
 ];
 
